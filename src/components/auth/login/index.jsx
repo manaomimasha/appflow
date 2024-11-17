@@ -23,15 +23,25 @@ const Login = () => {
         }
     }
 
-    const onGoogleSignIn = (e) => {
-        e.preventDefault()
-        if (!isSigningIn) {
-            setIsSigningIn(true)
-            doSignInWithGoogle().catch(err => {
-                setIsSigningIn(false)
-            })
+    // const onGoogleSignIn = (e) => {
+    //     e.preventDefault()
+    //     if (!isSigningIn) {
+    //         setIsSigningIn(true)
+    //         doSignInWithGoogle().catch(err => {
+    //             setIsSigningIn(false)
+    //         })
+    //     }
+    // }
+
+    const handleGoogleLogin = async () => {
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          const result = await firebase.auth().signInWithPopup(provider);
+          console.log("User logged in:", result.user);
+        } catch (error) {
+          console.error("Authentication error:", error);
         }
-    }
+      };
 
     return (
         <div>
@@ -93,8 +103,16 @@ const Login = () => {
                     </div>
                     <button
                         disabled={isSigningIn}
-                        onClick={(e) => { onGoogleSignIn(e) }}
-                        className={`w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium  ${isSigningIn ? 'cursor-not-allowed' : 'hover:bg-gray-100 transition duration-300 active:bg-gray-100'}`}>
+
+                        className= {`w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-100 transition duration-300 active:bg-gray-100`} 
+                        onClick={handleGoogleLogin}
+
+
+
+                        // onClick={(e) => { onGoogleSignIn(e) }}
+                        // className={`w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium  ${isSigningIn ? 'cursor-not-allowed' : 'hover:bg-gray-100 transition duration-300 active:bg-gray-100'}`}
+                        
+                        >
                         <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0_17_40)">
                                 <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
@@ -110,6 +128,7 @@ const Login = () => {
                         </svg>
                         {isSigningIn ? 'Signing In...' : 'Continue with Google'}
                     </button>
+
                 </div>
             </main>
         </div>
