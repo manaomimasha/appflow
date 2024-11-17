@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../firebase/auth'
 
-// import {doSignInWithGoogle } from '../../../firebase/auth'
+import {doSignInWithGoogle } from '../../../firebase/auth'
 
 import { useAuth } from '../../../contexts/authContext'
 
@@ -34,15 +34,18 @@ const Login = () => {
     // }
 
     const handleGoogleLogin = async () => {
+        setIsSigningIn(true); // Indica que estás autenticando
         try {
-          const provider = new firebase.auth.GoogleAuthProvider();
-          const result = await firebase.auth().signInWithPopup(provider);
-          console.log("User logged in:", result.user);
+            await doSignInWithGoogle();
+            console.log("Authentication successful!");
         } catch (error) {
-          console.error("Authentication error:", error);
+            console.error("Authentication error:", error);
+            setErrorMessage("Google authentication failed. Please try again.");
+        } finally {
+            setIsSigningIn(false); // Restaura el estado tras finalizar
         }
-      };
-
+    };
+    
     return (
         <div>
             {userLoggedIn && (<Navigate to={'/home'} replace={true} />)}
