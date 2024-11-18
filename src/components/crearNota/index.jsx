@@ -100,33 +100,33 @@ function CrearNota() {
         <>
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
             <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              {show ? 'Editar Nota' : 'Crear Nota'}
+              {show ? 'Edit note ' : 'Create note '}
             </h1>
             <input
               value={fname}
               onChange={(e) => setFname(e.target.value)}
               className="w-full p-2 mb-3 border rounded-lg"
-              placeholder="Título"
+              placeholder="Title"
             />
             <input
               value={lname}
               onChange={(e) => setLname(e.target.value)}
               className="w-full p-2 mb-3 border rounded-lg"
-              placeholder="Descripcio"
+              placeholder="Description"
             />
             {!show ? (
               <button
                 onClick={handleCreate}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full"
               >
-                Crear
+                Create
               </button>
             ) : (
               <button
                 onClick={handleUpdate}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full"
               >
-                Actualizar
+                Update
               </button>
             )}
           </div>
@@ -160,7 +160,7 @@ function CrearNota() {
           </div>
         </>
       ) : (
-        <p className="text-center text-red-500">Inicia sesión para gestionar tus notas.</p>
+        <p className="text-center text-red-500">Log in for managing your notes.</p>
       )}
     </div>
   );
