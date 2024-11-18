@@ -5,6 +5,9 @@ import Login from "./components/auth/login";
 import Register from "./components/auth/register";
 
 import Header from "./components/header";
+import CrearNota from "./components/crearNota";
+
+
 import Home from "./components/home";
 
 import { AuthProvider } from "./contexts/authContext";
@@ -29,6 +32,7 @@ function App() {
       path: "/home",
       element: <Home />,
     },
+    
   ];
   let routesElement = useRoutes(routesArray);
 
@@ -37,6 +41,7 @@ function App() {
     <AuthProvider>
     <Header />
     <div className="w-full h-screen flex flex-col">{routesElement}</div>
+    {/* <CrearNota/> */}
   </AuthProvider>
     // <div className="App">
     //   <h1>hola</h1>
