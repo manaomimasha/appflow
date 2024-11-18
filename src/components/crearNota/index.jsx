@@ -31,28 +31,52 @@ function CrearNota() {
       const getData = async () => {
         const userCollection = collection(database, `users/${userId}/notes`);
         const dbVal = await getDocs(userCollection);
-        setVal(dbVal.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // setVal(dbVal.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // Invierte el orden de los documentos
+           setVal(dbVal.docs.map((doc) => ({ ...doc.data(), id: doc.id })).reverse());
+    
       };
       getData();
     }
   }, [userId]);
 
+  // const handleCreate = async () => {
+  //   if (userId) {
+  //     const userCollection = collection(database, `users/${userId}/notes`);
+  //     await addDoc(userCollection, { name1: fname, name2: lname });
+  //     setFname('');
+  //     setLname('');
+  //   }
+  // };
+
   const handleCreate = async () => {
     if (userId) {
       const userCollection = collection(database, `users/${userId}/notes`);
-      await addDoc(userCollection, { name1: fname, name2: lname });
+      const newDoc = await addDoc(userCollection, { name1: fname, name2: lname });
+      
+      // Agregar la nueva nota al estado local
+      setVal((prev) => [{ id: newDoc.id, name1: fname, name2: lname }, ...prev]);
+  
       setFname('');
       setLname('');
     }
   };
 
+  // const handleDelete = async (id) => {
+  //   if (userId) {
+  //     const deleteVal = doc(database, `users/${userId}/notes`, id);
+  //     await deleteDoc(deleteVal);
+  //   }
+  // };
   const handleDelete = async (id) => {
     if (userId) {
       const deleteVal = doc(database, `users/${userId}/notes`, id);
       await deleteDoc(deleteVal);
+  
+      // Actualizar el estado local eliminando la nota
+      setVal((prev) => prev.filter((note) => note.id !== id));
     }
   };
-
   const handleEdit = (id, name1, name2) => {
     setFname(name1);
     setLname(name2);
