@@ -14,7 +14,7 @@ import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
 
 function App() {
-  
+
   const routesArray = [
     {
       path: "*",
@@ -32,17 +32,17 @@ function App() {
       path: "/home",
       element: <Home />,
     },
-    
+
   ];
   let routesElement = useRoutes(routesArray);
 
   return (
 
     <AuthProvider>
-    <Header />
-    <div className="w-full h-screen flex flex-col">{routesElement}</div>
-    {/* <CrearNota/> */}
-  </AuthProvider>
+      <Header />
+      <div className="w-full h-screen flex flex-col">{routesElement}</div>
+      {/* <CrearNota/> */}
+    </AuthProvider>
     // <div className="App">
     //   <h1>hola</h1>
     // </div>
